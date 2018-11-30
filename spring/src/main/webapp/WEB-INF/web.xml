@@ -7,10 +7,9 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
-    <!-- Spring?????????????? -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:spring-mybatis.xml</param-value>
+        <param-value>classpath*:/spring-mybatis.xml</param-value>
     </context-param>
 
     <servlet>
@@ -18,14 +17,12 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath*:spring-mvc.xml</param-value>
+            <param-value>classpath*:/spring-mvc.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-    <!--?DispatcherServlet????-->
     <servlet-mapping>
         <servlet-name>springMvc</servlet-name>
-        <!-- ??????,?????(/)???(/*) -->
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
