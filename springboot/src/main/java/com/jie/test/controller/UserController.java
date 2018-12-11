@@ -10,13 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
-
     @Autowired
-    public UserService userService;
+    private UserService userService;
 
-    @RequestMapping(value = "/getOne")
-    public User getUserById(@RequestParam(value = "id") Long id){
-        User user=userService.getUserById(id);
-        return user;
+    @RequestMapping(value = "/get")
+    public User aa(@RequestParam(value = "id") Long id){
+        return userService.getUserById(id);
     }
 }
