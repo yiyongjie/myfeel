@@ -6,7 +6,6 @@ import lombok.Data;
 public class LinkTable {
 
     private Node first;
-    private Node last;
 
     @Data
     class Node{
@@ -20,9 +19,8 @@ public class LinkTable {
 
     public void add(int data){
         Node node=new Node(data);
-        this.last=first;
+        node.next=first;
         this.first=node;
-        this.first.next=last;
     }
 
     public void listData(){
@@ -34,6 +32,11 @@ public class LinkTable {
             node=node.next;
         }
         System.out.println(sb.toString());
+    }
+
+    public void addToPosition(int index,int data){
+        Node node=new Node(data);
+
     }
 
     public static void main(String[] args) {
