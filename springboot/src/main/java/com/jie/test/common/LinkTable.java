@@ -43,9 +43,24 @@ public class LinkTable {
             preNode=preNode.next;
             position++;
         }
+        position=0;
         Node agoNode=preNode.next;
         preNode.next=node;
         preNode.next.next=agoNode;
+        listData();
+    }
+
+    public void deleteToPosition(int index){
+        Node oneNode=first;
+        Node n=null;
+        Node twoNode=null;
+        while (position!=index){
+            oneNode=oneNode.next;
+            n=oneNode;
+            position++;
+        }
+        twoNode=oneNode.next;
+        n.next=twoNode;
         listData();
     }
 
@@ -58,5 +73,6 @@ public class LinkTable {
         l.add(5);
         l.add(6);
         l.addToPosition(1,4);
+        l.deleteToPosition(1);
     }
 }
