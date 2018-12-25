@@ -1,4 +1,4 @@
-package com.jie.test.common;
+package com.jie.test.common.smallDemo;
 
 import lombok.Data;
 
