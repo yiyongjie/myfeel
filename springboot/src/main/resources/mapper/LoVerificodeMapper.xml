@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.csj.linkorder.linkorderapp.dao.LoVerificodeMapper">
+
+    <resultMap id="BaseResultMap" type="com.csj.linkorder.linkorderapp.model.LoVerificode">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="telphone" jdbcType="VARCHAR" property="telphone"/>
+        <result column="timestamp" jdbcType="TIMESTAMP" property="timestamp"/>
+        <result column="verificode" jdbcType="VARCHAR" property="verificode"/>
+    </resultMap>
+
+    <insert id="insertSelective" parameterType="com.csj.linkorder.linkorderapp.model.LoVerificode">
+        insert into lo_verificode
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="telphone != null">
+                telphone,
+            </if>
+            <if test="timestamp != null">
+                timestamp,
+            </if>
+            <if test="verificode != null">
+                verificode,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="telphone != null">
+                #{telphone,jdbcType=VARCHAR},
+            </if>
+            <if test="timestamp != null">
+                #{timestamp,jdbcType=TIMESTAMP},
+            </if>
+            <if test="verificode != null">
+                #{verificode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateVerificode">
+        UPDATE lo_verificode
+        <set>
+            <if test="verificode != null">
+                 verificode=#{verificode,jdbcType=VARCHAR},
+            </if>
+            <if test="timestamp != null">
+                 timestamp=#{timestamp,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where telphone = #{telphone,jdbcType=VARCHAR}
+    </update>
+
+    <select id="countVerificode" resultType="java.lang.Integer">
+      SELECT count(1) from lo_verificode where telphone = #{telphone,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getVerificodeByTelphone" resultMap="BaseResultMap"
+            parameterType="com.csj.linkorder.linkorderapp.model.LoVerificode">
+      select * from lo_verificode where telphone = #{telphone,jdbcType=VARCHAR}
+    </select>
+</mapper>
