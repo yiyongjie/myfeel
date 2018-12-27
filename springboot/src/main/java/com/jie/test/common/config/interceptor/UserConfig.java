@@ -1,10 +1,11 @@
 package com.jie.test.common.config.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
-import com.csj.linkorder.linkorderapp.common.exception.AppException;
-import com.csj.linkorder.linkorderapp.common.model.APIResponse;
-import com.csj.linkorder.linkorderapp.dao.UserTokenMapper;
-import com.csj.linkorder.linkorderapp.model.UserToken;
+
+import com.jie.test.common.exception.AppException;
+import com.jie.test.common.model.APIResponse;
+import com.jie.test.dao.UserTokenMapper;
+import com.jie.test.model.UserToken;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
