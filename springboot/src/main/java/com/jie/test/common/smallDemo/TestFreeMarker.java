@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class TestFreeMarker {
     private static final String TEMPLATE_PATH = "src/main/resources/templates";
-    private static final String CLASS_PATH = "src/main/java/com/jie/test/model";
+    private static final String CLASS_PATH = "/src/main/java/com/jie/test/model";
 
     public static void main(String[] args) {
         // step1 创建freeMarker配置实例
@@ -35,8 +35,10 @@ public class TestFreeMarker {
             // step4 加载模版文件
             Template template = configuration.getTemplate("test.ftl");
             // step5 生成数据
-//            TestFreeMarker.class.getClass().getResource()
-            File docFile = new File(CLASS_PATH + "\\" + "UserT.java");
+            //因拆多模块所以加模块，单模块不需要
+            String p="springboot"+CLASS_PATH +"/UserT.java";
+//            String p=System.getProperty("user.dir")+"/springboot"+CLASS_PATH +"/UserT.java";
+            File docFile = new File(p);
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
             // step6 输出文件
             template.process(dataMap, out);
