@@ -1,6 +1,6 @@
 package com.jie.test.common.exception;
 
-import com.csj.linkorder.linkorderapp.common.model.APIResponse;
+import com.jie.test.common.model.APIResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
