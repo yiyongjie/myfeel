@@ -1,22 +1,18 @@
-package com.jie.test.common.smallDemo;
+package com.jie.test.common.util;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-public class DataUse {
+public class FreemarkUtil {
 
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://localhost:3306/yyjtest?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root123";
-
     private static final String SQL = "SELECT * FROM ";// 数据库操作
 
     static {
@@ -56,34 +52,17 @@ public class DataUse {
         }
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        Connection conn = getConnection();
-//        DatabaseMetaData db = conn.getMetaData();
-//        ResultSet rs = db.getTables("yyjtest", null, null, new String[] { "TABLE" });
-//        List tableNameList = new ArrayList();
-//        while (rs.next()) {
-//            tableNameList.add(rs.getString("TABLE_NAME"));
-//        }
-//        System.out.println(db.getUserName());
-//    }
     /**
      * 获取数据库下的所有表名
      */
     public static List<String> getTableNames() throws SQLException {
         List<String> tableNames = new ArrayList<>();
         Connection conn = getConnection();
-//        ResultSet rs = null;
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SHOW TABLES");
         try {
-
-            //获取数据库的元数据
-//            DatabaseMetaData db = conn.getMetaData();
-            //从元数据中获取到所有的表名
-//            rs = db.getTables(null, null, null, new String[] { "TABLE" });
             while(rs.next()) {
                 tableNames.add(rs.getString(1));
-//                tableNames.add(rs.getString(3));
             }
         } catch (SQLException e) {
             log.error("getTableNames failure", e);
@@ -200,24 +179,5 @@ public class DataUse {
             }
         }
         return columnComments;
-    }
-    public static void main(String[] args) throws SQLException {
-        List<String> tableNames = getTableNames();
-        System.out.println("tableNames:" + tableNames);
-        for (String tableName : tableNames) {
-            System.out.println("ColumnNames:" + getColumnNames(tableName));
-            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
-            System.out.println("ColumnComments:" + getColumnComments(tableName));
-        }
-//        Connection conn = getConnection();
-////        ResultSet rs = null;
-//
-//        Statement stmt = conn.createStatement();
-//        ResultSet rs = stmt.executeQuery("SHOW TABLES");
-//        while (rs.next()) {
-//            String tableName = rs.getString(1);
-//            System.out.println(rs.getString(1));
-////            tables.add(tableName);
-//        }
     }
 }
