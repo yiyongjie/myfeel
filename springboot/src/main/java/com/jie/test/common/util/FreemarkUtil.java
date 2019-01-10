@@ -33,7 +33,7 @@ public class FreemarkUtil {
                     //准备一下模板参数
                     Map<String, Object> dataMap = new HashMap<String, Object>();
                     dataMap.put("classPath", "com.jie.test.model");
-//                    dataMap.put("tableName", s);
+                    dataMap.put("tableName", tableName);
 
                     //把下斜杠去掉再把每个斜杠后面的字符大写
                     String[] splitTableName=tableName.split("_");
@@ -44,6 +44,7 @@ public class FreemarkUtil {
                     }
                     dataMap.put("className", className.toString());
                     System.out.println(className);
+                    List<String> columns=DataUse.getColumnNames(tableName);
                     // step4 加载模版文件
 //                    Template template = configuration.getTemplate("test.ftl");
 //                    // step5 生成数据

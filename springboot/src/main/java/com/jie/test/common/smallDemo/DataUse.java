@@ -1,5 +1,7 @@
 package com.jie.test.common.smallDemo;
 
+import com.jie.test.common.model.gen.GenColumn;
+import com.jie.test.common.model.gen.GenContent;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -201,6 +203,26 @@ public class DataUse {
         }
         return columnComments;
     }
+
+    /**
+     * 获取模板元素
+     * @param tableName
+     * @return
+     */
+    public static GenContent getModel(String tableName){
+        GenContent genContent=new GenContent();
+        String[] splitTableName=tableName.split("_");
+        StringBuffer className=new StringBuffer();
+        for(int i=0;i<splitTableName.length;i++){
+            String splitContent=splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
+            className.append(splitContent);
+        }
+        genContent.setClassName(className.toString());
+        genContent.setTableName(tableName);
+        return genContent;
+    }
+
+
     public static void main(String[] args) throws SQLException {
         List<String> tableNames = getTableNames();
         System.out.println("tableNames:" + tableNames);
@@ -209,15 +231,5 @@ public class DataUse {
             System.out.println("ColumnTypes:" + getColumnTypes(tableName));
             System.out.println("ColumnComments:" + getColumnComments(tableName));
         }
-//        Connection conn = getConnection();
-////        ResultSet rs = null;
-//
-//        Statement stmt = conn.createStatement();
-//        ResultSet rs = stmt.executeQuery("SHOW TABLES");
-//        while (rs.next()) {
-//            String tableName = rs.getString(1);
-//            System.out.println(rs.getString(1));
-////            tables.add(tableName);
-//        }
     }
 }
