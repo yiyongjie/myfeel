@@ -217,7 +217,7 @@ public class DataUse {
         //这是对象的类名,变量名
         for(int i=0;i<splitTableName.length;i++){
             String splitContent=splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
-            String splitVarContent=splitTableName[i].substring(0,1).concat(splitTableName[i].substring(1));
+            String splitVarContent=i==0?splitTableName[i].substring(0,1).concat(splitTableName[i].substring(1)):splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
             className.append(splitContent);
             varName.append(splitVarContent);
         }
@@ -238,7 +238,7 @@ public class DataUse {
             StringBuffer ModelColunmName=new StringBuffer();
             String[] splitColumnName=columnNames.get(i).split("_");
             for(int j=0;j<splitColumnName.length;j++){
-                String splitContent=splitColumnName[i].substring(0,1).toUpperCase().concat(splitColumnName[i].substring(1));
+                String splitContent=j==0?splitColumnName[j].substring(0,1).concat(splitColumnName[j].substring(1)):splitColumnName[j].substring(0,1).toUpperCase().concat(splitColumnName[j].substring(1));
                 ModelColunmName.append(splitContent);
             }
             genColumn.setModelColumn(ModelColunmName.toString());
@@ -250,12 +250,14 @@ public class DataUse {
 
 
     public static void main(String[] args) throws SQLException {
-        List<String> tableNames = getTableNames();
-        System.out.println("tableNames:" + tableNames);
-        for (String tableName : tableNames) {
-            System.out.println("ColumnNames:" + getColumnNames(tableName));
-            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
-            System.out.println("ColumnComments:" + getColumnComments(tableName));
-        }
+//        List<String> tableNames = getTableNames();
+//        System.out.println("tableNames:" + tableNames);
+//        for (String tableName : tableNames) {
+//            System.out.println("ColumnNames:" + getColumnNames(tableName));
+//            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
+//            System.out.println("ColumnComments:" + getColumnComments(tableName));
+//        }
+        GenContent genContent=getModel("user_test");
+        System.out.println(genContent.getClassName());
     }
 }
