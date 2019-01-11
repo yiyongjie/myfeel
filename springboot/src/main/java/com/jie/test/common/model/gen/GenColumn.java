@@ -27,4 +27,8 @@ public class GenColumn {
      * java的字段类型
      */
     private String columnJavaType;
+    /**
+     * 是否是主键
+     */
+    private boolean isPK;
 }
