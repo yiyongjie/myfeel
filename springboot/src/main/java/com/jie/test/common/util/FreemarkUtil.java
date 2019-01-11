@@ -45,7 +45,7 @@ public class FreemarkUtil {
                 Template xmlTemplate = configuration.getTemplate("xml.ftl");
                 //生成数据位置,因拆多模块所以加模块，单模块不需要
                 String modelPosition="springboot"+MODEL_PATH +"/"+genContent.getClassName()+".java";
-                String mapperPosition="springboot"+MAPPER_PATH +"/"+genContent.getClassName()+".java";
+                String mapperPosition="springboot"+MAPPER_PATH +"/"+genContent.getClassName()+"Mapper"+".java";
                 String xmlPosition="springboot"+XML_PATH +"/"+genContent.getClassName()+".xml";
                 //输出model文件
                 out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(modelPosition))));
@@ -54,8 +54,8 @@ public class FreemarkUtil {
                 out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(mapperPosition))));
                 mapperTemplate.process(dataMap, out);
                 //输出xml文件
-                out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(xmlPosition))));
-                mapperTemplate.process(dataMap, out);
+//                out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(xmlPosition))));
+//                mapperTemplate.process(dataMap, out);
                 }
 
         } catch (Exception e) {
