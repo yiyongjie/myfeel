@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -58,34 +60,19 @@ public class DataUse {
         }
     }
 
-//    public static void main(String[] args) throws SQLException {
-//        Connection conn = getConnection();
-//        DatabaseMetaData db = conn.getMetaData();
-//        ResultSet rs = db.getTables("yyjtest", null, null, new String[] { "TABLE" });
-//        List tableNameList = new ArrayList();
-//        while (rs.next()) {
-//            tableNameList.add(rs.getString("TABLE_NAME"));
-//        }
-//        System.out.println(db.getUserName());
-//    }
     /**
      * 获取数据库下的所有表名
      */
     public static List<String> getTableNames() throws SQLException {
         List<String> tableNames = new ArrayList<>();
         Connection conn = getConnection();
-//        ResultSet rs = null;
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery("SHOW TABLES");
         try {
-
             //获取数据库的元数据
-//            DatabaseMetaData db = conn.getMetaData();
             //从元数据中获取到所有的表名
-//            rs = db.getTables(null, null, null, new String[] { "TABLE" });
             while(rs.next()) {
                 tableNames.add(rs.getString(1));
-//                tableNames.add(rs.getString(3));
             }
         } catch (SQLException e) {
             log.error("getTableNames failure", e);
@@ -98,6 +85,35 @@ public class DataUse {
             }
         }
         return tableNames;
+    }
+
+    /**
+     * 获取数据库下的所有表的注释
+     */
+    public static String getTableCommonts(String tableName) throws SQLException {
+        String tablecommnet = "";
+        Connection conn = getConnection();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery("SHOW CREATE TABLE " + tableName);
+        try {
+            //获取数据库的元数据
+            //从元数据中获取到所有的表名
+            if(rs!=null){
+                rs.next();
+            }
+            String createDDL = rs.getString(2);
+            tablecommnet = parse(createDDL);
+        } catch (SQLException e) {
+            log.error("getTableNames failure", e);
+        } finally {
+            try {
+                rs.close();
+                closeConnection(conn);
+            } catch (SQLException e) {
+                log.error("close ResultSet failure", e);
+            }
+        }
+        return tablecommnet;
     }
 
     /**
@@ -232,8 +248,10 @@ public class DataUse {
         for(int i=0;i<columnNames.size();i++){
             GenColumn genColumn=new GenColumn();
             genColumn.setColumn(columnNames.get(i));
-            genColumn.setColunmType(columnType.get(i));
+            genColumn.setColumnType(columnType.get(i));
             genColumn.setColumnRemark(columnComment.get(i));
+            String javaType=convertType(columnType.get(i));
+            genColumn.setColumnJavaType(javaType);
             //对象里的字段名称
             StringBuffer ModelColunmName=new StringBuffer();
             String[] splitColumnName=columnNames.get(i).split("_");
@@ -248,6 +266,38 @@ public class DataUse {
         return genContent;
     }
 
+    /**
+     * 根据数据库类型转换为java类型
+     * @param columnType
+     * @return
+     */
+    public static String convertType(String columnType){
+        String javaType="";
+        switch (columnType){
+            case "INT":javaType="int";break;
+            case "BIGINT":javaType="long";break;
+            case "VARCHAR":javaType="String";break;
+            case "DECIMAL":javaType="BigDecimal";break;
+            case "DATETIME":javaType="Date";break;
+        }
+        return javaType;
+    }
+
+    /**
+     * 返回注释信息
+     * @param all
+     * @return
+     */
+    public static String parse(String all) {
+        String comment = null;
+        int index = all.indexOf("COMMENT='");
+        if (index < 0) {
+            return "";
+        }
+        comment = all.substring(index + 9);
+        comment = comment.substring(0, comment.length() - 1);
+        return comment;
+    }
 
     public static void main(String[] args) throws SQLException {
         List<String> tableNames = getTableNames();
@@ -256,6 +306,7 @@ public class DataUse {
             System.out.println("ColumnNames:" + getColumnNames(tableName));
             System.out.println("ColumnTypes:" + getColumnTypes(tableName));
             System.out.println("ColumnComments:" + getColumnComments(tableName));
+            System.out.println(getTableCommonts("user"));
         }
 //        GenContent genContent=getModel("user_test");
 //        System.out.println(genContent.getClassName());

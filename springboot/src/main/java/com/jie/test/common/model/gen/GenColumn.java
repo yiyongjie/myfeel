@@ -16,11 +16,15 @@ public class GenColumn {
      */
     private String modelColumn;
     /**
-     * 字段类型
+     * 数据库的字段类型
      */
-    private String colunmType;
+    private String columnType;
     /**
      * 字段注释
      */
     private String columnRemark;
+    /**
+     * java的字段类型
+     */
+    private String columnJavaType;
 }
