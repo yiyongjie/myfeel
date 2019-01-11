@@ -6,8 +6,9 @@
     <result column="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
         </#list>
   </resultMap>
+
     <sql id="Base_Column_List" >
-        <#list genContent.genColumns as column>${column.column},</#list>
+        <#list genContent.genColumns as column><#if column_index=0>${column.column}<#else>,${column.column}</#if></#list>
     </sql>
 
 
