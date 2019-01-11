@@ -54,8 +54,8 @@ public class FreemarkUtil {
                 out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(mapperPosition))));
                 mapperTemplate.process(dataMap, out);
                 //输出xml文件
-//                out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(xmlPosition))));
-//                mapperTemplate.process(dataMap, out);
+                out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(xmlPosition))));
+                xmlTemplate.process(dataMap, out);
                 }
 
         } catch (Exception e) {
