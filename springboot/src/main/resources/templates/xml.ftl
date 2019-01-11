@@ -3,7 +3,8 @@
 <mapper namespace="${mapperClassPath}.${genContent.className}Mapper" >
   <resultMap id="BaseResultMap" type="${modelClassPath}.${genContent.className}" >
         <#list genContent.genColumns as column>
-            <#if column.isPK ==1>
+
+            <#if column.isPK>
             <result id="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
             <#else>
             <result column="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
