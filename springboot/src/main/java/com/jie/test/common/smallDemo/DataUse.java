@@ -232,6 +232,7 @@ public class DataUse {
         StringBuffer varName=new StringBuffer();
         //这是对象的类名,变量名
         for(int i=0;i<splitTableName.length;i++){
+            //把下斜杠去掉再把每个斜杠后面的字符大写
             String splitContent=splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
             String splitVarContent=i==0?splitTableName[i].substring(0,1).concat(splitTableName[i].substring(1)):splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
             className.append(splitContent);
