@@ -18,11 +18,16 @@ public class GenContent {
      */
     private String tableName;
     /**
-     * 字段属性
-     */
-    private List<GenColumn> genColumns;
-    /**
      * 变量名称
      */
     private String varName;
+    /**
+     * 表注释
+     */
+    private String tableComment;
+    /**
+     * 字段属性
+     */
+    private List<GenColumn> genColumns;
+
 }

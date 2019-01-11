@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-@ApiModel(value = "")
+@ApiModel(value = "${genContent.tableComment}")
 public class ${genContent.className} {
 
 <#list genContent.genColumns as column>

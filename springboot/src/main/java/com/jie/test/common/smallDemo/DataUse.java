@@ -225,7 +225,7 @@ public class DataUse {
      * @param tableName
      * @return
      */
-    public static GenContent getModel(String tableName){
+    public static GenContent getModel(String tableName) throws SQLException {
         GenContent genContent=new GenContent();
         String[] splitTableName=tableName.split("_");
         StringBuffer className=new StringBuffer();
@@ -237,9 +237,12 @@ public class DataUse {
             className.append(splitContent);
             varName.append(splitVarContent);
         }
+        //获取表的注释
+        String tableComment=getTableCommonts(tableName);
         genContent.setClassName(className.toString());
         genContent.setVarName(varName.toString());
         genContent.setTableName(tableName);
+        genContent.setTableComment(tableComment);
         //拿到所有的字段属性
         List<String> columnNames=getColumnNames(tableName);
         List<String> columnType=getColumnTypes(tableName);
@@ -284,7 +287,7 @@ public class DataUse {
     }
 
     /**
-     * 返回注释信息
+     * 截取注释信息
      * @param all
      * @return
      */
