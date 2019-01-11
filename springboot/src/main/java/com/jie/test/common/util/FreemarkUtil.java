@@ -1,5 +1,6 @@
 package com.jie.test.common.util;
 
+import com.jie.test.common.model.gen.GenContent;
 import com.jie.test.common.smallDemo.DataUse;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -22,7 +23,7 @@ public class FreemarkUtil {
         Configuration configuration = new Configuration();
         Writer out = null;
         try {
-            // step2 获取模版路径
+            //获取模版路径
             Resource resource = new ClassPathResource("templates");
             File file = resource.getFile();
             configuration.setDirectoryForTemplateLoading(file);
@@ -33,29 +34,20 @@ public class FreemarkUtil {
                     //准备一下模板参数
                     Map<String, Object> dataMap = new HashMap<String, Object>();
                     dataMap.put("classPath", "com.jie.test.model");
-                    dataMap.put("tableName", tableName);
-
+//                    dataMap.put("tableName", tableName);
+                    GenContent genContent=DataUse.getModel(tableName);
                     //把下斜杠去掉再把每个斜杠后面的字符大写
-                    String[] splitTableName=tableName.split("_");
-                    StringBuffer className=new StringBuffer();
-                    for(int i=0;i<splitTableName.length;i++){
-                        String splitContent=splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
-                        className.append(splitContent);
-                    }
-                    dataMap.put("className", className.toString());
-                    System.out.println(className);
-                    List<String> columns=DataUse.getColumnNames(tableName);
-                    // step4 加载模版文件
-//                    Template template = configuration.getTemplate("test.ftl");
-//                    // step5 生成数据
-//                    //因拆多模块所以加模块，单模块不需要
-//                    String p="springboot"+CLASS_PATH +"/UserT.java";
-////            String p=System.getProperty("user.dir")+"/springboot"+CLASS_PATH +"/UserT.java";
-//                    File docFile = new File(p);
-//                    out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
-//                    // step6 输出文件
-//                    template.process(dataMap, out);
-//                    System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^UserT.java 文件创建成功 !");
+                    dataMap.put("genContent",genContent);
+                    //  加载模版文件
+                    Template template = configuration.getTemplate("test.ftl");
+                    //生成数据,因拆多模块所以加模块，单模块不需要
+                    String p="springboot"+CLASS_PATH +"/"+genContent.getClassName()+".java";
+//            String p=System.getProperty("user.dir")+"/springboot"+CLASS_PATH +"/UserT.java";
+                    File docFile = new File(p);
+                    out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(docFile)));
+                    //输出文件
+                    template.process(dataMap, out);
+                    System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^UserT.java 文件创建成功 !");
                 }
 
         } catch (Exception e) {

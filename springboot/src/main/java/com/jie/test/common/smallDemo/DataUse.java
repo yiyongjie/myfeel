@@ -250,14 +250,14 @@ public class DataUse {
 
 
     public static void main(String[] args) throws SQLException {
-//        List<String> tableNames = getTableNames();
-//        System.out.println("tableNames:" + tableNames);
-//        for (String tableName : tableNames) {
-//            System.out.println("ColumnNames:" + getColumnNames(tableName));
-//            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
-//            System.out.println("ColumnComments:" + getColumnComments(tableName));
-//        }
-        GenContent genContent=getModel("user_test");
-        System.out.println(genContent.getClassName());
+        List<String> tableNames = getTableNames();
+        System.out.println("tableNames:" + tableNames);
+        for (String tableName : tableNames) {
+            System.out.println("ColumnNames:" + getColumnNames(tableName));
+            System.out.println("ColumnTypes:" + getColumnTypes(tableName));
+            System.out.println("ColumnComments:" + getColumnComments(tableName));
+        }
+//        GenContent genContent=getModel("user_test");
+//        System.out.println(genContent.getClassName());
     }
 }

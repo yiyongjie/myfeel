@@ -4,9 +4,14 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-@ApiModel(value = "${classRemark}")
-public class ${className} {
+@ApiModel(value = "")
+public class ${genContent.className} {
 
-   @ApiModelProperty(value = "${remark}")
-   private Integer ${content};
+<#list genContent.genColumns as column>
+   /*
+   *${column.columnRemark}
+   */
+   @ApiModelProperty(value = "${column.columnRemark}")
+   private ${column.colunmType} ${column.modelColumn};
+</#list>
 }
