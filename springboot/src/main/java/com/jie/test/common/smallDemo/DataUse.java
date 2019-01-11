@@ -213,12 +213,38 @@ public class DataUse {
         GenContent genContent=new GenContent();
         String[] splitTableName=tableName.split("_");
         StringBuffer className=new StringBuffer();
+        StringBuffer varName=new StringBuffer();
+        //这是对象的类名,变量名
         for(int i=0;i<splitTableName.length;i++){
             String splitContent=splitTableName[i].substring(0,1).toUpperCase().concat(splitTableName[i].substring(1));
+            String splitVarContent=splitTableName[i].substring(0,1).concat(splitTableName[i].substring(1));
             className.append(splitContent);
+            varName.append(splitVarContent);
         }
         genContent.setClassName(className.toString());
+        genContent.setVarName(varName.toString());
         genContent.setTableName(tableName);
+        //拿到所有的字段属性
+        List<String> columnNames=getColumnNames(tableName);
+        List<String> columnType=getColumnTypes(tableName);
+        List<String> columnComment=getColumnComments(tableName);
+        List<GenColumn> columns=new ArrayList<>();
+        for(int i=0;i<columnNames.size();i++){
+            GenColumn genColumn=new GenColumn();
+            genColumn.setColumn(columnNames.get(i));
+            genColumn.setColunmType(columnType.get(i));
+            genColumn.setColumnRemark(columnComment.get(i));
+            //对象里的字段名称
+            StringBuffer ModelColunmName=new StringBuffer();
+            String[] splitColumnName=columnNames.get(i).split("_");
+            for(int j=0;j<splitColumnName.length;j++){
+                String splitContent=splitColumnName[i].substring(0,1).toUpperCase().concat(splitColumnName[i].substring(1));
+                ModelColunmName.append(splitContent);
+            }
+            genColumn.setModelColumn(ModelColunmName.toString());
+            columns.add(genColumn);
+        }
+        genContent.setGenColumns(columns);
         return genContent;
     }
 

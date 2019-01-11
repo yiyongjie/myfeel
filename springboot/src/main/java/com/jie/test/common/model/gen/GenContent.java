@@ -21,4 +21,8 @@ public class GenContent {
      * 字段属性
      */
     private List<GenColumn> genColumns;
+    /**
+     * 变量名称
+     */
+    private String varName;
 }
