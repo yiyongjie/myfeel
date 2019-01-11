@@ -3,9 +3,9 @@
 <mapper namespace="${mapperClassPath}.${genContent.className}Mapper" >
   <resultMap id="BaseResultMap" type="${modelClassPath}.${genContent.className}" >
         <#list genContent.genColumns as column>
-   <result column="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
+    <result column="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
         </#list>
-    </resultMap>
+  </resultMap>
     <sql id="Base_Column_List" >
         <#list genContent.genColumns as column>${column.column},</#list>
     </sql>
