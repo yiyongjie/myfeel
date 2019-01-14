@@ -56,6 +56,7 @@ public class FreemarkUtil {
                 //输出xml文件
                 out=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(xmlPosition))));
                 xmlTemplate.process(dataMap, out);
+                log.info(genContent.getClassName()+"对象生成成功");
                 }
 
         } catch (Exception e) {

@@ -37,7 +37,7 @@
         </trim>
     </insert>
 
-    <update id="update${genContent.className}">
+    <update id="update${genContent.className}" parameterType="${modelClassPath}.${genContent.className}">
         update ${genContent.tableName}
         <set>
             <#list genContent.genColumns as column>
@@ -48,11 +48,10 @@
             </#if>
             </#list>
         </set>
-        where
-           <#list genContent.genColumns as column>
-               <#if column.isPK==1>
-                ${column.modelColumn}=${r'#{'}${column.modelColumn},jdbcType=${column.columnType}${r'}'}
-               </#if>
-           </#list>
+        where<#list genContent.genColumns as column><#if column.isPK==1>${column.modelColumn}=${r'#{'}${column.modelColumn},jdbcType=${column.columnType}${r'}'}</#if></#list>
     </update>
+
+    <select id="list${genContent.className}" resultMap="BaseResultMap" parameterType="${modelClassPath}.${genContent.className}">
+        select <include refid="Base_Column_List"/> from ${genContent.tableName}
+    </select>
 </mapper>

@@ -11,7 +11,7 @@
     <modules>
         <module>servlet</module>
         <module>mybatis</module>
-        <module>spring</module>
+        <!--<module>spring</module>-->
         <module>springboot</module>
     </modules>
     <properties>
