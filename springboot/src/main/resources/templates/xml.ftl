@@ -36,4 +36,23 @@
               </#list>
         </trim>
     </insert>
+
+    <update id="update${genContent.className}">
+        update ${genContent.tableName}
+        <set>
+            <#list genContent.genColumns as column>
+            <#if column.isPK!=1>
+            <if test="${column.modelColumn} != null and ${column.modelColumn} != ''" >
+            ${column.modelColumn}=${r'#{'}${column.modelColumn},jdbcType=${column.columnType}${r'}'},
+            </if>
+            </#if>
+            </#list>
+        </set>
+        where
+           <#list genContent.genColumns as column>
+               <#if column.isPK==1>
+                ${column.modelColumn}=${r'#{'}${column.modelColumn},jdbcType=${column.columnType}${r'}'}
+               </#if>
+           </#list>
+    </update>
 </mapper>
