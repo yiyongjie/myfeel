@@ -3,9 +3,8 @@
 <mapper namespace="${mapperClassPath}.${genContent.className}Mapper" >
   <resultMap id="BaseResultMap" type="${modelClassPath}.${genContent.className}" >
         <#list genContent.genColumns as column>
-
-            <#if column.isPK>
-            <result id="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
+            <#if column.isPK==1>
+            <id column="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
             <#else>
             <result column="${column.column}" property="${column.modelColumn}" jdbcType="${column.columnType}" />
             </#if>
@@ -16,5 +15,25 @@
         <#list genContent.genColumns as column><#if column_index=0>${column.column}<#else>,${column.column}</#if></#list>
     </sql>
 
-
+    <insert id="add${genContent.className}" keyProperty="id" useGeneratedKeys="true">
+        insert into ${genContent.tableName}
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <#list genContent.genColumns as column>
+                <#if column.isPK!=1>
+                <if test="${column.modelColumn} != null and ${column.modelColumn} != ''" >
+                    ${column.column},
+                </if>
+                </#if>
+            </#list>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+              <#list genContent.genColumns as column>
+                  <#if column.isPK!=1>
+                  <if test="${column.modelColumn} != null and ${column.modelColumn} != ''" >
+                      ${r'#{'}${column.modelColumn},jdbcType=${column.columnType}${r'}'},
+                  </if>
+                  </#if>
+              </#list>
+        </trim>
+    </insert>
 </mapper>

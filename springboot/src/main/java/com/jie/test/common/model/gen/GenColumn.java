@@ -30,5 +30,5 @@ public class GenColumn {
     /**
      * 是否是主键
      */
-    private boolean isPK;
+    private int isPK;
 }

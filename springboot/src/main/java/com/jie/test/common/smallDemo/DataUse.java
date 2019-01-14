@@ -271,7 +271,7 @@ public class DataUse {
             genColumn.setColumnType(columnType.get(i));
             genColumn.setColumnRemark(columnComment.get(i));
             if(columnNames.get(i).equals(pk)){
-                genColumn.setPK(true);
+                genColumn.setIsPK(1);
             }
             String javaType=convertType(columnType.get(i));
             genColumn.setColumnJavaType(javaType);
